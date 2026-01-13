@@ -75,12 +75,20 @@ class Router implements RouterInterface
 
         $identifier = trim($request->getPathInfo(), '/');
 
-        // Avoid processing empty URLs or those that already have a module assigned
-        if (empty($identifier) || $request->getModuleName()) {
+        // Check for 'partner/' prefix
+        $prefix = 'partner/';
+        if (strpos($identifier, $prefix) !== 0) {
             return null;
         }
 
-        $urlModel = $this->customerPartnerRepository->getByUrl($identifier);
+        $urlKey = substr($identifier, strlen($prefix));
+
+        // Avoid processing empty URLs
+        if (empty($urlKey)) {
+            return null;
+        }
+
+        $urlModel = $this->customerPartnerRepository->getByUrl($urlKey);
 
         // Verify that the model is valid (not an empty array) and has the necessary data
         if (!is_object($urlModel) || !method_exists($urlModel, 'getUrlKey')) {
