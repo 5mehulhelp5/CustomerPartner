@@ -30,10 +30,10 @@ class Login extends Template
 
     /**
      * Summary of __construct
-     * @param Context $context
+     * @param Template\Context $context
      * @param Config $configHelper
      * @param MagentoLogin $magentoLogin
-     * @param MagentoLoginInfo $magentoLoginInfo
+     * @param MagentoLogin\Info $magentoLoginInfo
      * @param array $data
      */
     public function __construct(

@@ -6,18 +6,23 @@
     <body>
         <attribute name="class" value="customer-partner-login"/>
         <referenceContainer name="content">
-            <!-- customer.form.login.extra -->
             <container name="customer.partner.login.container" label="Customer Login Container" htmlTag="div" htmlClass="login-container">
                 <block class="Aoropeza\CustomerPartner\Block\Login" name="customer_partner_form_login" template="Aoropeza_CustomerPartner::form/login.phtml" cacheable="false">
-                    <block class="Magento\Captcha\Block\Captcha" name="captcha" cacheable="false">
-                        <arguments>
-                            <argument name="formId" xsi:type="string">customer_partner_form_login</argument>
-                            <argument name="imgWidth" xsi:type="number">230</argument>
-                            <argument name="imgHeight" xsi:type="number">50</argument>
-                        </arguments>
+                    <block class="Magento\Captcha\Block\Captcha" name="captcha" after="-" cacheable="false">
+                        <action method="setFormId">
+                                <argument name="formId" xsi:type="string">user_login</argument>
+                            </action>
+                            <action method="setImgWidth">
+                                <argument name="width" xsi:type="string">230</argument>
+                            </action>
+                            <action method="setImgHeight">
+                                <argument name="width" xsi:type="string">50</argument>
+                            </action>
                     </block>
                 </block>
             </container>
+        </referenceContainer>
+        <referenceContainer name="content">
             <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
                 <arguments>
                     <argument name="triggers" xsi:type="array">
@@ -26,5 +31,10 @@
                 </arguments>
             </block>
         </referenceContainer>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="captcha_page_head_components" template="Magento_Captcha::js/components.phtml"/>
+        </referenceBlock>
+
+
     </body>
 </page>

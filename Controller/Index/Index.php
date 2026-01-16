@@ -79,24 +79,40 @@ class Index implements HttpGetActionInterface
     {
         $page = $this->pageFactory->create();
         try {
+            $redirectPath = '';
+            $redirect = false;
+            // Get url_key from parameter passed by Router
+            $urlKey = explode("/", $this->request->getParam('url_key'));
+            if (is_array($urlKey)) {
+                if (!isset($urlKey[1])) {
+                    $redirectPath = '';
+                    $redirect = true;
+                } else {
+                    $redirect = false;
+                    $urlKey = $urlKey[1];
+                }
+            }
+
             if (!$this->config->isEnable()) {
-                $resultRedirect = $this->resultRedirectFactory->create();
-                $resultRedirect->setPath('');
-                return $resultRedirect;
+                $redirectPath = '';
+                $redirect = true;
             }
 
             // If user is already logged in, redirect to customer account
             if ($this->session->isLoggedIn()) {
+                $redirectPath = 'customer/account';
+                $redirect = true;
+            }
+
+            if ($redirect) {
                 $resultRedirect = $this->resultRedirectFactory->create();
-                $resultRedirect->setPath('customer/account');
+                $resultRedirect->setPath($redirectPath);
                 return $resultRedirect;
             }
-            // Get url_key from parameter passed by Router
-            $urlKey = $this->request->getParam('url_key');
+
 
             if ($urlKey) {
                 $customerPartner = $this->customerPartnerRepository->getByUrl($urlKey);
-
                 // If model is valid and has a name, set the title
                 if (is_object($customerPartner) && method_exists($customerPartner, 'getName')) {
 
