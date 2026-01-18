@@ -82,7 +82,7 @@ class Index implements HttpGetActionInterface
             $redirectPath = '';
             $redirect = false;
             // Get url_key from parameter passed by Router
-            $urlKey = explode("/", $this->request->getParam('url_key'));
+            $urlKey = explode("/", $this->request->getParam('url_key') ?? '');
             if (is_array($urlKey)) {
                 if (!isset($urlKey[1])) {
                     $redirectPath = '';
