@@ -5,6 +5,7 @@
     </head>
     <body>
         <attribute name="class" value="customer-partner-login"/>
+        <referenceBlock name="page.main.title" remove="true" />
         <referenceContainer name="content">
             <container name="customer.partner.login.container" label="Customer Login Container" htmlTag="div" htmlClass="login-container">
                 <block class="Aoropeza\CustomerPartner\Block\Login" name="customer_partner_form_login" template="Aoropeza_CustomerPartner::form/login.phtml" cacheable="false">

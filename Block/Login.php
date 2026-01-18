@@ -3,10 +3,13 @@
 namespace Aoropeza\CustomerPartner\Block;
 
 use Aoropeza\CustomerPartner\Helper\Config;
+use Aoropeza\CustomerPartner\Model\CustomerPartnerRepository as CustomerPartnerModel;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Block\Form\Login as MagentoLogin;
 use Magento\Customer\Block\Form\Login\Info as MagentoLoginInfo;
+use Magento\Framework\Session\SessionManagerInterface;
+
 
 class Login extends Template
 {
@@ -29,11 +32,25 @@ class Login extends Template
     private $magentoLoginInfo;
 
     /**
+     * Summary of sessionManager
+     * @var SessionManagerInterface
+     */
+    protected $sessionManager;
+
+    /**
+     * Summary of customerPartnerModel
+     * @var CustomerPartnerModel
+     */
+    protected $customerPartnerModel;
+
+    /**
      * Summary of __construct
      * @param Template\Context $context
      * @param Config $configHelper
      * @param MagentoLogin $magentoLogin
      * @param MagentoLogin\Info $magentoLoginInfo
+     * @param SessionManagerInterface $sessionManager
+     * @param CustomerPartnerModel $customerPartnerModel
      * @param array $data
      */
     public function __construct(
@@ -41,8 +58,12 @@ class Login extends Template
         Config $configHelper,
         MagentoLogin $magentoLogin,
         MagentoLoginInfo $magentoLoginInfo,
+        SessionManagerInterface $sessionManager,
+        CustomerPartnerModel $customerPartnerModel,
         array $data = []
     ) {
+        $this->customerPartnerModel = $customerPartnerModel;
+        $this->sessionManager = $sessionManager;
         $this->magentoLogin = $magentoLogin;
         $this->magentoLoginInfo = $magentoLoginInfo;
         $this->configHelper = $configHelper;
@@ -53,9 +74,42 @@ class Login extends Template
      * Returns title
      * @return string
      */
-    public function getTitle(): string
+    public function getSuccessTitle(): string
     {
         return $this->configHelper->getSuccessTitle();
+    }
+
+    /**
+     * Returns congrats
+     * @return string
+     */
+    public function getCongrats(): string
+    {
+        return $this->configHelper->getCongrats();
+    }
+
+    /**
+     * Returns message
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->configHelper->getMessage();
+    }
+
+
+    public function getDescription()
+    {
+        $id = $this->sessionManager->getCustomerPartner();
+        $customerPartner = $this->customerPartnerModel->get($id);
+        return $customerPartner->getDescription() ?? null;
+    }
+
+    public function getShortDescription()
+    {
+        $id = $this->sessionManager->getCustomerPartner();
+        $customerPartner = $this->customerPartnerModel->get($id);
+        return $customerPartner->getShortDescription() ?? null;
     }
 
     /**
@@ -117,8 +171,5 @@ class Login extends Template
     {
         return $this->magentoLoginInfo->getCreateAccountUrl();
     }
-
-
-
 
 }

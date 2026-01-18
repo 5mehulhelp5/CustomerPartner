@@ -139,7 +139,7 @@
                 <label translate="true">Description</label>
                 <dataScope>description</dataScope>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
             </settings>
             <formElements>
@@ -170,7 +170,7 @@
                 <label translate="true">Short Description</label>
                 <dataScope>short_description</dataScope>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
             </settings>
             <formElements>
