@@ -9,6 +9,7 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Customer\Block\Form\Login as MagentoLogin;
 use Magento\Customer\Block\Form\Login\Info as MagentoLoginInfo;
 use Magento\Framework\Session\SessionManagerInterface;
+use Magento\Cms\Model\Template\FilterProvider;
 
 
 class Login extends Template
@@ -44,6 +45,12 @@ class Login extends Template
     protected $customerPartnerModel;
 
     /**
+     * Summary of filterProvider
+     * @var FilterProvider
+     */
+    protected $filterProvider;
+
+    /**
      * Summary of __construct
      * @param Template\Context $context
      * @param Config $configHelper
@@ -60,8 +67,10 @@ class Login extends Template
         MagentoLoginInfo $magentoLoginInfo,
         SessionManagerInterface $sessionManager,
         CustomerPartnerModel $customerPartnerModel,
+        FilterProvider $filterProvider,
         array $data = []
     ) {
+        $this->filterProvider = $filterProvider;
         $this->customerPartnerModel = $customerPartnerModel;
         $this->sessionManager = $sessionManager;
         $this->magentoLogin = $magentoLogin;
@@ -95,6 +104,11 @@ class Login extends Template
     public function getMessage(): string
     {
         return $this->configHelper->getMessage();
+    }
+
+    public function getHtmlContent($content)
+    {
+        return $this->filterProvider->getPageFilter()->filter($content);
     }
 
 
