@@ -110,7 +110,7 @@ class Router implements RouterInterface
                 $cookieMetadata
             );
 
-            // El valor de la cookie es el ID del grupo de cliente
+            // The cookie value is the customer group ID
             $this->cookieManager->setPublicCookie(
                 Config::ROUTER_URL_KEY,
                 $urlModel->getUrlKey(),
