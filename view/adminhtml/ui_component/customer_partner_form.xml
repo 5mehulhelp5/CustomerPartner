@@ -149,7 +149,7 @@
                 <dataScope>description</dataScope>
             </settings>
             <formElements>
-                <wysiwyg class="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg">
+                <wysiwyg>
                     <settings>
                         <rows>8</rows>
                         <wysiwyg>true</wysiwyg>
@@ -168,21 +168,27 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">customer_partner</item>
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
+                        <item name="pagebuilder_button" xsi:type="boolean">true</item>
+                        <item name="toggle_button" xsi:type="boolean">true</item>
+                        <item name="height" xsi:type="string">100px</item>
+                        <item name="add_variables" xsi:type="boolean">true</item>
+                        <item name="add_widgets" xsi:type="boolean">true</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                    </item>
                 </item>
             </argument>
             <settings>
-                <additionalClasses>
-                    <class name="admin__field-wide">true</class>
-                </additionalClasses>
-                <label translate="true">Short Description</label>
+                <label translate="true">Description</label>
+                <notice translate="true">Note: Keyboard shortcut to activate editor help : Alt + 0 (Windows) or &#x2325;0 (MacOS)</notice>
                 <dataScope>short_description</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">false</rule>
-                </validation>
             </settings>
             <formElements>
                 <wysiwyg>
                     <settings>
+                        <rows>8</rows>
                         <wysiwyg>true</wysiwyg>
                     </settings>
                 </wysiwyg>
